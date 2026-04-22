@@ -1,0 +1,35 @@
+# 🧠 Core ML / TTS
+torch==2.3.1
+torchaudio==2.3.1
+transformers==4.41.2
+numpy==1.26.4
+scipy==1.13.1
+einops==0.8.0
+safetensors==0.4.3
+huggingface-hub==0.23.4
+
+# Audio processing
+librosa==0.10.2
+soundfile==0.13.1 
+pydub==0.25.1
+
+# LUX TTS
+zipvoice==0.1.0
+
+# Utilities
+tqdm==4.66.4
+requests==2.31.0
+pyyaml==6.0.1
+
+# Future (Damon memory system)
+pymongo==4.7.2
+lhotse
+tensorboard
+jieba
+pypinyin
+cn2an
+inflect
+piper_phonemize -f https://k2-fsa.github.io/icefall/piper_phonemize.html
+git+https://github.com/ysharma3501/LinaCodec.git
+onnxruntime
+sounddevice
