@@ -20,6 +20,9 @@ dependencies = [
     "soundfile==0.13.1",
     "pydub==0.25.1",
     "sounddevice",
+    "opencv-python",
+    "pillow",
+    "pyperclip",
 
     # TTS
     "zipvoice==0.1.0",

@@ -33,8 +33,13 @@ piper_phonemize -f https://k2-fsa.github.io/icefall/piper_phonemize.html
 git+https://github.com/ysharma3501/LinaCodec.git
 onnxruntime==1.23.2
 sounddevice
+opencv-python
+pillow
+pyperclip
 setuptools==69.5.1
 
 faster-whisper 
 tensorflow 
 tensorflow-hub 
+opencv-python 
+pyperclip

@@ -33,6 +33,11 @@ for path in NVIDIA_PATHS:
 
 # --- 3. DYNAMIC MODEL PATHS ---
 MODELS_DIR = PROJECT_ROOT / "Models"
+DATA_DIR = PROJECT_ROOT / "data"
+MEDIA_DIR = PROJECT_ROOT / "media"
+VISION_OUTPUT_DIR = MEDIA_DIR / "vision"
+VISION_IMAGE_DIR = VISION_OUTPUT_DIR / "images"
+VISION_RECORDING_DIR = VISION_OUTPUT_DIR / "recordings"
 WHISPER_DIR = MODELS_DIR / "whisper"
 WHISPER_MODEL = "large-v3"
 WHISPER_MODEL_DIR = WHISPER_DIR / WHISPER_MODEL
@@ -42,7 +47,19 @@ YAMNET_PATH = MODELS_DIR / "tfhub"
 HF_HOME = MODELS_DIR / "huggingface"
 TORCH_HOME = MODELS_DIR / "torch"
 
-for path in (MODELS_DIR, WHISPER_DIR, WHISPER_MODEL_DIR, YAMNET_PATH, HF_HOME, TORCH_HOME):
+for path in (
+    MODELS_DIR,
+    DATA_DIR,
+    MEDIA_DIR,
+    VISION_OUTPUT_DIR,
+    VISION_IMAGE_DIR,
+    VISION_RECORDING_DIR,
+    WHISPER_DIR,
+    WHISPER_MODEL_DIR,
+    YAMNET_PATH,
+    HF_HOME,
+    TORCH_HOME,
+):
     path.mkdir(parents=True, exist_ok=True)
 
 
@@ -53,6 +70,7 @@ os.environ["KMP_DUPLICATE_LIB_OK"] = "TRUE"
 os.environ["CT2_CUDA_ALLOW_DLOPEN"] = "1"
 os.environ["CT2_VERBOSE"] = "0"
 os.environ["TF_ENABLE_ONEDNN_OPTS"] = "0"
+os.environ["OPENCV_LOG_LEVEL"] = "SILENT"
 
 warnings.filterwarnings("ignore")
 logging.getLogger("faster_whisper").setLevel(logging.ERROR)
