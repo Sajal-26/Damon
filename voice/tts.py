@@ -1,18 +1,19 @@
-import torch
 import queue
 import threading
 from concurrent.futures import ThreadPoolExecutor
+from pathlib import Path
 
+from config import TTS_CONFIG, DEVICE
+
+import torch
 from zipvoice.luxvoice import LuxTTS
 from .audio_player import AudioPlayer
 from .chunker import TextChunker
-from .config import TTS_CONFIG
-from pathlib import Path
 
 
 class DamonTTS:
     def __init__(self, voice_path = None):
-        self.device = "cuda" if torch.cuda.is_available() else "cpu"
+        self.device = DEVICE if DEVICE == "cuda" and torch.cuda.is_available() else "cpu"
         print(f"Loading LuxTTS on {self.device}...")
 
         self.lux = LuxTTS("YatharthS/LuxTTS", device=self.device)
