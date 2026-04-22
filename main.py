@@ -8,8 +8,11 @@ from senses.vision import (
     capture_screen,
     capture_webcam,
     close_webcam,
+    get_camera_index,
+    list_cameras,
     open_webcam,
     record_webcam_frames,
+    set_camera_index,
     show_webcam,
 )
 
@@ -134,6 +137,36 @@ def check_pipeline():
     return capture
 
 
+def select_webcam():
+    print("\n[SYSTEM] Scanning for available webcams...")
+    cameras = list_cameras()
+
+    if not cameras:
+        print("[SYSTEM] No webcams found.")
+        return
+
+    print(f"[SYSTEM] Found {len(cameras)} camera(s):")
+    current = get_camera_index()
+
+    for idx in cameras:
+        status = "(current)" if idx == current else ""
+        print(f"  {idx}: Camera {idx} {status}")
+
+    try:
+        choice = input("\nSelect camera index (or press Enter to cancel): ").strip()
+        if not choice:
+            return
+
+        new_idx = int(choice)
+        if new_idx in cameras:
+            set_camera_index(new_idx)
+            print(f"[SYSTEM] Camera set to {new_idx}")
+        else:
+            print(f"[SYSTEM] Index {new_idx} is not in available cameras.")
+    except ValueError:
+        print("[SYSTEM] Invalid input.")
+
+
 def preview_webcam():
     print("\n[SYSTEM] Opening webcam preview. Press q in the preview window to close.")
 
@@ -159,7 +192,8 @@ def main():
         "4": ("Webcam adaptive frame capture", check_webcam_frames),
         "5": ("Async pipeline", check_pipeline),
         "6": ("Webcam preview", preview_webcam),
-        "7": ("Run safe checks", run_safe_checks),
+        "7": ("Select webcam", select_webcam),
+        "8": ("Run safe checks", run_safe_checks),
         "0": ("Exit", None),
     }
 

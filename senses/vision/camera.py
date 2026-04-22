@@ -9,7 +9,7 @@ from .types import CaptureInfo, file_info
 
 
 camera = None
-
+_camera_index = 0
 
 def _cv2():
     os.environ["OPENCV_LOG_LEVEL"] = "SILENT"
@@ -49,11 +49,42 @@ def _recording_dir(path: str | Path | None) -> Path:
     return output
 
 
-def open_webcam(camera_index: int = 0):
-    global camera
+def list_cameras() -> list[int]:
+    """List available camera indices."""
+    cv2 = _cv2()
+    available = []
+    # Probe indices 0-9. Most systems won't have more than a few.
+    for i in range(10):
+        backend = cv2.CAP_DSHOW if os.name == "nt" else 0
+        cap = cv2.VideoCapture(i, backend)
+        if cap is not None and cap.isOpened():
+            # Try to grab a frame to be sure it's really available
+            ret, _ = cap.read()
+            if ret:
+                available.append(i)
+            cap.release()
+    return available
+
+
+def set_camera_index(index: int):
+    """Set the default camera index for open_webcam."""
+    global _camera_index
+    _camera_index = index
+
+
+def get_camera_index() -> int:
+    """Get the current default camera index."""
+    return _camera_index
+
+
+def open_webcam(camera_index: int | None = None):
+    global camera, _camera_index
 
     if camera is not None and camera.isOpened():
         return
+
+    if camera_index is None:
+        camera_index = _camera_index
 
     cv2 = _cv2()
     backend = cv2.CAP_DSHOW if os.name == "nt" else 0
