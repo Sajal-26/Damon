@@ -11,7 +11,7 @@ class AudioStream:
     def __init__(
         self,
         samplerate=16000,
-        blocksize=1600,   # 0.1 sec chunks
+        blocksize=1600,
         channels=1,
         dtype="float32"
     ):
@@ -27,7 +27,6 @@ class AudioStream:
     def _callback(self, indata, frames, time, status):
         if status:
             print(f"[AudioStream Warning] {status}")
-        # Copy to avoid memory issues
         self.audio_q.put(indata.copy())
 
     # --- START STREAM ---
